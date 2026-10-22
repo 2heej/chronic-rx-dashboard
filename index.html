@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>만성질환 처방시장</title>
+<meta name="description" content="고혈압, 이상지질혈증, 당뇨 8개 성분의 2024~2025년 처방시장 규모와 추이 (교육용 가상 청구자료)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&display=swap">
+<style>
+:root {
+  --font-anthropic-sans: "Noto Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
+  --font-anthropic-serif: "Noto Serif KR", "AppleMyungjo", Georgia, serif;
+  --color-bg: #f6f6f3; --color-panel: #fcfcfb; --color-fg: #0b0b0b; --color-fg-muted: #6b6a66;
+  --color-border-line: #e1e0d9; --color-ok: #006300; --color-bad: #c62f2f;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 16px; --cds-gap-lg: 24px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-lg: 20px; --cds-radius: 8px;
+  --cds-font-size-caption: 12px; --cds-font-size-body: 14px; --cds-font-size-heading: 15px; --cds-font-size-title: 28px;
+  --cds-font-weight-medium: 500; --cds-dur-slow: .3s;
+  --cds-chart-grid: #e1e0d9; --cds-chart-axis: #c3c2b7; --cds-chart-muted: #c9c8c1; --cds-chart-reference: #898781;
+  --cds-surface-popover: #ffffff; --cds-border: rgba(11,11,11,.12); --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.10); --cds-text-secondary: #52514e;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #6250d6; --s8: #e34948;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --color-bg: #0d0d0d; --color-panel: #1a1a19; --color-fg: #f0efec; --color-fg-muted: #a3a29b;
+  --color-border-line: #2c2c2a; --color-ok: #2fbf2f; --color-bad: #e66767;
+  --cds-chart-grid: #2c2c2a; --cds-chart-axis: #383835; --cds-chart-muted: #4a4a46; --cds-chart-reference: #898781;
+  --cds-surface-popover: #232322; --cds-border: rgba(255,255,255,.12); --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.5); --cds-text-secondary: #c3c2b7;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  color-scheme: dark;
+} }
+html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: 14px; }
+#dash-root { max-width: 1200px; margin-inline: auto; padding-block: 32px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+#dash-root .dash-skeleton { color: transparent; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+// 대시보드 런타임(dash)을 대신하는 작은 shim: 데이터는 이 파일에 들어 있다.
+window.dash = (() => {
+  const DATA = {"area_monthly": [{"area": "고혈압", "month": "2024-01", "amount": 5059200, "patients": 188, "claims": 188}, {"area": "고혈압", "month": "2024-02", "amount": 5308800, "patients": 199, "claims": 199}, {"area": "고혈압", "month": "2024-03", "amount": 4598400, "patients": 170, "claims": 170}, {"area": "고혈압", "month": "2024-04", "amount": 5181600, "patients": 194, "claims": 194}, {"area": "고혈압", "month": "2024-05", "amount": 4641600, "patients": 173, "claims": 173}, {"area": "고혈압", "month": "2024-06", "amount": 5246400, "patients": 194, "claims": 194}, {"area": "고혈압", "month": "2024-07", "amount": 4552800, "patients": 170, "claims": 170}, {"area": "고혈압", "month": "2024-08", "amount": 5707200, "patients": 211, "claims": 211}, {"area": "고혈압", "month": "2024-09", "amount": 4516800, "patients": 169, "claims": 169}, {"area": "고혈압", "month": "2024-10", "amount": 5419200, "patients": 200, "claims": 200}, {"area": "고혈압", "month": "2024-11", "amount": 4473600, "patients": 166, "claims": 166}, {"area": "고혈압", "month": "2024-12", "amount": 5232000, "patients": 192, "claims": 192}, {"area": "고혈압", "month": "2025-01", "amount": 5282400, "patients": 192, "claims": 192}, {"area": "고혈압", "month": "2025-02", "amount": 4039200, "patients": 152, "claims": 152}, {"area": "고혈압", "month": "2025-03", "amount": 5311200, "patients": 195, "claims": 195}, {"area": "고혈압", "month": "2025-04", "amount": 4804800, "patients": 178, "claims": 178}, {"area": "고혈압", "month": "2025-05", "amount": 5320800, "patients": 196, "claims": 196}, {"area": "고혈압", "month": "2025-06", "amount": 4898400, "patients": 180, "claims": 180}, {"area": "고혈압", "month": "2025-07", "amount": 4716000, "patients": 173, "claims": 173}, {"area": "고혈압", "month": "2025-08", "amount": 5275200, "patients": 196, "claims": 196}, {"area": "고혈압", "month": "2025-09", "amount": 4392000, "patients": 162, "claims": 162}, {"area": "고혈압", "month": "2025-10", "amount": 5390400, "patients": 198, "claims": 198}, {"area": "고혈압", "month": "2025-11", "amount": 4545600, "patients": 167, "claims": 167}, {"area": "고혈압", "month": "2025-12", "amount": 5052000, "patients": 187, "claims": 187}, {"area": "당뇨", "month": "2024-01", "amount": 1255800, "patients": 59, "claims": 59}, {"area": "당뇨", "month": "2024-02", "amount": 1153200, "patients": 59, "claims": 59}, {"area": "당뇨", "month": "2024-03", "amount": 1083000, "patients": 47, "claims": 47}, {"area": "당뇨", "month": "2024-04", "amount": 1334400, "patients": 71, "claims": 71}, {"area": "당뇨", "month": "2024-05", "amount": 1015800, "patients": 46, "claims": 46}, {"area": "당뇨", "month": "2024-06", "amount": 1412400, "patients": 75, "claims": 75}, {"area": "당뇨", "month": "2024-07", "amount": 1108800, "patients": 50, "claims": 50}, {"area": "당뇨", "month": "2024-08", "amount": 1438800, "patients": 75, "claims": 75}, {"area": "당뇨", "month": "2024-09", "amount": 1073400, "patients": 53, "claims": 53}, {"area": "당뇨", "month": "2024-10", "amount": 1311000, "patients": 69, "claims": 69}, {"area": "당뇨", "month": "2024-11", "amount": 1173000, "patients": 57, "claims": 57}, {"area": "당뇨", "month": "2024-12", "amount": 1252800, "patients": 65, "claims": 65}, {"area": "당뇨", "month": "2025-01", "amount": 1183200, "patients": 61, "claims": 61}, {"area": "당뇨", "month": "2025-02", "amount": 1229400, "patients": 61, "claims": 61}, {"area": "당뇨", "month": "2025-03", "amount": 1174800, "patients": 59, "claims": 59}, {"area": "당뇨", "month": "2025-04", "amount": 1144200, "patients": 64, "claims": 64}, {"area": "당뇨", "month": "2025-05", "amount": 1528800, "patients": 66, "claims": 66}, {"area": "당뇨", "month": "2025-06", "amount": 1198200, "patients": 67, "claims": 67}, {"area": "당뇨", "month": "2025-07", "amount": 1495800, "patients": 68, "claims": 68}, {"area": "당뇨", "month": "2025-08", "amount": 925200, "patients": 56, "claims": 56}, {"area": "당뇨", "month": "2025-09", "amount": 1303200, "patients": 60, "claims": 60}, {"area": "당뇨", "month": "2025-10", "amount": 1211400, "patients": 65, "claims": 65}, {"area": "당뇨", "month": "2025-11", "amount": 1255200, "patients": 62, "claims": 62}, {"area": "당뇨", "month": "2025-12", "amount": 964200, "patients": 55, "claims": 55}, {"area": "이상지질혈증", "month": "2024-01", "amount": 2557200, "patients": 34, "claims": 34}, {"area": "이상지질혈증", "month": "2024-02", "amount": 2173200, "patients": 29, "claims": 29}, {"area": "이상지질혈증", "month": "2024-03", "amount": 2608800, "patients": 35, "claims": 35}, {"area": "이상지질혈증", "month": "2024-04", "amount": 2334000, "patients": 31, "claims": 31}, {"area": "이상지질혈증", "month": "2024-05", "amount": 2396400, "patients": 32, "claims": 32}, {"area": "이상지질혈증", "month": "2024-06", "amount": 2400000, "patients": 32, "claims": 32}, {"area": "이상지질혈증", "month": "2024-07", "amount": 2239200, "patients": 30, "claims": 30}, {"area": "이상지질혈증", "month": "2024-08", "amount": 1953600, "patients": 26, "claims": 26}, {"area": "이상지질혈증", "month": "2024-09", "amount": 2853600, "patients": 38, "claims": 38}, {"area": "이상지질혈증", "month": "2024-10", "amount": 2853600, "patients": 38, "claims": 38}, {"area": "이상지질혈증", "month": "2024-11", "amount": 1416000, "patients": 19, "claims": 19}, {"area": "이상지질혈증", "month": "2024-12", "amount": 2553600, "patients": 34, "claims": 34}, {"area": "이상지질혈증", "month": "2025-01", "amount": 3314400, "patients": 44, "claims": 44}, {"area": "이상지질혈증", "month": "2025-02", "amount": 2012400, "patients": 27, "claims": 27}, {"area": "이상지질혈증", "month": "2025-03", "amount": 1942800, "patients": 26, "claims": 26}, {"area": "이상지질혈증", "month": "2025-04", "amount": 2037600, "patients": 27, "claims": 27}, {"area": "이상지질혈증", "month": "2025-05", "amount": 3146400, "patients": 42, "claims": 42}, {"area": "이상지질혈증", "month": "2025-06", "amount": 2634000, "patients": 35, "claims": 35}, {"area": "이상지질혈증", "month": "2025-07", "amount": 2550000, "patients": 34, "claims": 34}, {"area": "이상지질혈증", "month": "2025-08", "amount": 1957200, "patients": 26, "claims": 26}, {"area": "이상지질혈증", "month": "2025-09", "amount": 3303600, "patients": 44, "claims": 44}, {"area": "이상지질혈증", "month": "2025-10", "amount": 2476800, "patients": 33, "claims": 33}, {"area": "이상지질혈증", "month": "2025-11", "amount": 2092800, "patients": 28, "claims": 28}, {"area": "이상지질혈증", "month": "2025-12", "amount": 2868000, "patients": 38, "claims": 38}, {"area": "전체", "month": "2024-01", "amount": 8872200, "patients": 272, "claims": 281}, {"area": "전체", "month": "2024-02", "amount": 8635200, "patients": 278, "claims": 287}, {"area": "전체", "month": "2024-03", "amount": 8290200, "patients": 243, "claims": 252}, {"area": "전체", "month": "2024-04", "amount": 8850000, "patients": 279, "claims": 296}, {"area": "전체", "month": "2024-05", "amount": 8053800, "patients": 244, "claims": 251}, {"area": "전체", "month": "2024-06", "amount": 9058800, "patients": 280, "claims": 301}, {"area": "전체", "month": "2024-07", "amount": 7900800, "patients": 244, "claims": 250}, {"area": "전체", "month": "2024-08", "amount": 9099600, "patients": 293, "claims": 312}, {"area": "전체", "month": "2024-09", "amount": 8443800, "patients": 247, "claims": 260}, {"area": "전체", "month": "2024-10", "amount": 9583800, "patients": 293, "claims": 307}, {"area": "전체", "month": "2024-11", "amount": 7062600, "patients": 232, "claims": 242}, {"area": "전체", "month": "2024-12", "amount": 9038400, "patients": 279, "claims": 291}, {"area": "전체", "month": "2025-01", "amount": 9780000, "patients": 282, "claims": 297}, {"area": "전체", "month": "2025-02", "amount": 7281000, "patients": 228, "claims": 240}, {"area": "전체", "month": "2025-03", "amount": 8428800, "patients": 272, "claims": 280}, {"area": "전체", "month": "2025-04", "amount": 7986600, "patients": 260, "claims": 269}, {"area": "전체", "month": "2025-05", "amount": 9996000, "patients": 285, "claims": 304}, {"area": "전체", "month": "2025-06", "amount": 8730600, "patients": 273, "claims": 282}, {"area": "전체", "month": "2025-07", "amount": 8761800, "patients": 261, "claims": 275}, {"area": "전체", "month": "2025-08", "amount": 8157600, "patients": 268, "claims": 278}, {"area": "전체", "month": "2025-09", "amount": 8998800, "patients": 257, "claims": 266}, {"area": "전체", "month": "2025-10", "amount": 9078600, "patients": 287, "claims": 296}, {"area": "전체", "month": "2025-11", "amount": 7893600, "patients": 244, "claims": 257}, {"area": "전체", "month": "2025-12", "amount": 8884200, "patients": 276, "claims": 280}], "area_yearly": [{"area": "고혈압", "amount_2024": 59937600, "amount_2025": 59028000, "patients_2024": 393, "patients_2025": 378, "claims_2024": 2226, "claims_2025": 2176, "prescribers_2024": 313, "prescribers_2025": 298}, {"area": "당뇨", "amount_2024": 14612400, "amount_2025": 14613600, "patients_2024": 143, "patients_2025": 143, "claims_2024": 726, "claims_2025": 744, "prescribers_2024": 131, "prescribers_2025": 131}, {"area": "이상지질혈증", "amount_2024": 28339200, "amount_2025": 30336000, "patients_2024": 129, "patients_2025": 135, "claims_2024": 378, "claims_2025": 404, "prescribers_2024": 122, "prescribers_2025": 128}, {"area": "전체", "amount_2024": 102889200, "amount_2025": 103977600, "patients_2024": 603, "patients_2025": 591, "claims_2024": 3330, "claims_2025": 3324, "prescribers_2024": 404, "prescribers_2025": 387}], "ingredient_quarterly": [{"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2024-Q1", "amount": 5788800, "patients": 132, "claims": 201}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2024-Q2", "amount": 5702400, "patients": 130, "claims": 198}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2024-Q3", "amount": 5558400, "patients": 126, "claims": 193}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2024-Q4", "amount": 5529600, "patients": 131, "claims": 192}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2025-Q1", "amount": 5356800, "patients": 123, "claims": 186}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2025-Q2", "amount": 5241600, "patients": 122, "claims": 182}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2025-Q3", "amount": 5241600, "patients": 123, "claims": 182}, {"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "quarter": "2025-Q4", "amount": 5270400, "patients": 119, "claims": 183}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2024-Q1", "amount": 4836000, "patients": 104, "claims": 155}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2024-Q2", "amount": 4960800, "patients": 103, "claims": 159}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2024-Q3", "amount": 4898400, "patients": 107, "claims": 157}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2024-Q4", "amount": 5491200, "patients": 117, "claims": 176}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2025-Q1", "amount": 5366400, "patients": 114, "claims": 172}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2025-Q2", "amount": 5678400, "patients": 118, "claims": 182}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2025-Q3", "amount": 5210400, "patients": 117, "claims": 167}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "quarter": "2025-Q4", "amount": 5678400, "patients": 116, "claims": 182}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2024-Q1", "amount": 4341600, "patients": 136, "claims": 201}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2024-Q2", "amount": 4406400, "patients": 133, "claims": 204}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2024-Q3", "amount": 4320000, "patients": 130, "claims": 200}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2024-Q4", "amount": 4104000, "patients": 132, "claims": 190}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2025-Q1", "amount": 3909600, "patients": 123, "claims": 181}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2025-Q2", "amount": 4104000, "patients": 121, "claims": 190}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2025-Q3", "amount": 3931200, "patients": 120, "claims": 182}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "quarter": "2025-Q4", "amount": 4039200, "patients": 120, "claims": 187}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2024-Q1", "amount": 3532800, "patients": 46, "claims": 46}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2024-Q2", "amount": 3763200, "patients": 49, "claims": 49}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2024-Q3", "amount": 3532800, "patients": 46, "claims": 46}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2024-Q4", "amount": 3456000, "patients": 45, "claims": 45}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2025-Q1", "amount": 3609600, "patients": 46, "claims": 47}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2025-Q2", "amount": 4377600, "patients": 57, "claims": 57}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2025-Q3", "amount": 4224000, "patients": 54, "claims": 55}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "quarter": "2025-Q4", "amount": 4070400, "patients": 52, "claims": 53}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2024-Q1", "amount": 3806400, "patients": 51, "claims": 52}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2024-Q2", "amount": 3367200, "patients": 46, "claims": 46}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2024-Q3", "amount": 3513600, "patients": 48, "claims": 48}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2024-Q4", "amount": 3367200, "patients": 46, "claims": 46}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2025-Q1", "amount": 3660000, "patients": 50, "claims": 50}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2025-Q2", "amount": 3440400, "patients": 47, "claims": 47}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2025-Q3", "amount": 3586800, "patients": 49, "claims": 49}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "quarter": "2025-Q4", "amount": 3367200, "patients": 46, "claims": 46}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2024-Q1", "amount": 2690400, "patients": 43, "claims": 59}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2024-Q2", "amount": 2827200, "patients": 43, "claims": 62}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2024-Q3", "amount": 2736000, "patients": 44, "claims": 60}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2024-Q4", "amount": 2781600, "patients": 44, "claims": 61}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2025-Q1", "amount": 2736000, "patients": 43, "claims": 60}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2025-Q2", "amount": 2872800, "patients": 44, "claims": 63}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2025-Q3", "amount": 2872800, "patients": 43, "claims": 63}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "quarter": "2025-Q4", "amount": 2508000, "patients": 41, "claims": 55}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2024-Q1", "amount": 583200, "patients": 40, "claims": 54}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2024-Q2", "amount": 637200, "patients": 42, "claims": 59}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2024-Q3", "amount": 637200, "patients": 42, "claims": 59}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2024-Q4", "amount": 669600, "patients": 42, "claims": 62}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2025-Q1", "amount": 561600, "patients": 40, "claims": 52}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2025-Q2", "amount": 712800, "patients": 42, "claims": 66}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2025-Q3", "amount": 561600, "patients": 41, "claims": 52}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "quarter": "2025-Q4", "amount": 637200, "patients": 39, "claims": 59}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2024-Q1", "amount": 218400, "patients": 42, "claims": 52}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2024-Q2", "amount": 298200, "patients": 44, "claims": 71}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2024-Q3", "amount": 247800, "patients": 46, "claims": 59}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2024-Q4", "amount": 285600, "patients": 47, "claims": 68}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2025-Q1", "amount": 289800, "patients": 49, "claims": 69}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2025-Q2", "amount": 285600, "patients": 49, "claims": 68}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2025-Q3", "amount": 289800, "patients": 50, "claims": 69}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "quarter": "2025-Q4", "amount": 285600, "patients": 46, "claims": 68}], "ingredient_yearly": [{"area": "고혈압", "ingredient": "텔미사르탄", "klass": "ARB", "amount_2024": 22579200, "amount_2025": 21110400, "patients_2024": 148, "patients_2025": 129, "claims_2024": 784, "claims_2025": 733}, {"area": "고혈압", "ingredient": "로사르탄", "klass": "ARB", "amount_2024": 20186400, "amount_2025": 21933600, "patients_2024": 132, "patients_2025": 124, "claims_2024": 647, "claims_2025": 703}, {"area": "고혈압", "ingredient": "암로디핀", "klass": "CCB", "amount_2024": 17172000, "amount_2025": 15984000, "patients_2024": 156, "patients_2025": 128, "claims_2024": 795, "claims_2025": 740}, {"area": "이상지질혈증", "ingredient": "아토르바스타틴", "klass": "스타틴", "amount_2024": 14284800, "amount_2025": 16281600, "patients_2024": 65, "patients_2025": 71, "claims_2024": 186, "claims_2025": 212}, {"area": "이상지질혈증", "ingredient": "로수바스타틴", "klass": "스타틴", "amount_2024": 14054400, "amount_2025": 14054400, "patients_2024": 64, "patients_2025": 64, "claims_2024": 192, "claims_2025": 192}, {"area": "당뇨", "ingredient": "시타글립틴", "klass": "DPP-4 억제제", "amount_2024": 11035200, "amount_2025": 10989600, "patients_2024": 49, "patients_2025": 47, "claims_2024": 242, "claims_2025": 241}, {"area": "당뇨", "ingredient": "글리메피리드", "klass": "설포닐우레아", "amount_2024": 2527200, "amount_2025": 2473200, "patients_2024": 46, "patients_2025": 44, "claims_2024": 234, "claims_2025": 229}, {"area": "당뇨", "ingredient": "메트포르민", "klass": "비구아나이드", "amount_2024": 1050000, "amount_2025": 1150800, "patients_2024": 48, "patients_2025": 52, "claims_2024": 250, "claims_2025": 274}], "region_yearly": [{"area": "고혈압", "amount_2024": 29976000, "amount_2025": 30288000, "patients_2025": 193, "prescribers_2025": 157, "region": "수도권"}, {"area": "고혈압", "amount_2024": 13840800, "amount_2025": 14095200, "patients_2025": 91, "prescribers_2025": 69, "region": "영남권"}, {"area": "고혈압", "amount_2024": 8097600, "amount_2025": 7816800, "patients_2025": 49, "prescribers_2025": 39, "region": "호남제주권"}, {"area": "고혈압", "amount_2024": 8023200, "amount_2025": 6828000, "patients_2025": 45, "prescribers_2025": 33, "region": "강원충청권"}, {"area": "당뇨", "amount_2024": 7248600, "amount_2025": 8163000, "patients_2025": 67, "prescribers_2025": 61, "region": "수도권"}, {"area": "당뇨", "amount_2024": 3975600, "amount_2025": 3498000, "patients_2025": 42, "prescribers_2025": 37, "region": "영남권"}, {"area": "당뇨", "amount_2024": 2161200, "amount_2025": 2095200, "patients_2025": 23, "prescribers_2025": 22, "region": "강원충청권"}, {"area": "당뇨", "amount_2024": 1227000, "amount_2025": 857400, "patients_2025": 11, "prescribers_2025": 11, "region": "호남제주권"}, {"area": "이상지질혈증", "amount_2024": 12918000, "amount_2025": 12478800, "patients_2025": 57, "prescribers_2025": 55, "region": "수도권"}, {"area": "이상지질혈증", "amount_2024": 6710400, "amount_2025": 7950000, "patients_2025": 34, "prescribers_2025": 32, "region": "영남권"}, {"area": "이상지질혈증", "amount_2024": 4628400, "amount_2025": 4858800, "patients_2025": 21, "prescribers_2025": 20, "region": "호남제주권"}, {"area": "이상지질혈증", "amount_2024": 4082400, "amount_2025": 5048400, "patients_2025": 23, "prescribers_2025": 21, "region": "강원충청권"}, {"area": "전체", "amount_2024": 50142600, "amount_2025": 50929800, "patients_2025": 284, "prescribers_2025": 201, "region": "수도권"}, {"area": "전체", "amount_2024": 24526800, "amount_2025": 25543200, "patients_2025": 150, "prescribers_2025": 89, "region": "영남권"}, {"area": "전체", "amount_2024": 14266800, "amount_2025": 13971600, "patients_2025": 82, "prescribers_2025": 51, "region": "강원충청권"}, {"area": "전체", "amount_2024": 13953000, "amount_2025": 13533000, "patients_2025": 75, "prescribers_2025": 46, "region": "호남제주권"}]};
+  const DEFAULTS = { area: '전체', metric: 'amount' };
+  const calcs = {};
+  const fns = [];
+  let params = { ...DEFAULTS };
+  const run = () => fns.forEach((f) => f());
+  const css = getComputedStyle(document.documentElement);
+  const api = {
+    data: (id) => id in DATA ? { status: 'ok', data: DATA[id] } : id in calcs ? { status: 'ok', data: calcs[id] } : { status: 'missing', data: [] },
+    calc: (id, o) => { calcs[id] = o.fn(...o.inputs.map((i) => api.data(i).data)); },
+    onData: (fn) => { fns.push(fn); fn(); },
+    params: () => ({ ...params }),
+    setParams: (p) => { params = { ...params, ...p }; run(); },
+    resetParams: () => { params = { ...DEFAULTS }; run(); },
+    get colors() { return [1, 2, 3, 4, 5, 6, 7, 8].map((i) => css.getPropertyValue('--s' + i).trim()); },
+    setLink: () => {},
+  };
+  let t;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(run, 120); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', run);
+  return api;
+})();
+</script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+#dash-root .cm { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+#dash-root .cm-head { display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+#dash-root .cm-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+#dash-root .cm-takeaway { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 70ch; line-height: 1.55; min-height: 1.55em; }
+#dash-root .cm-takeaway b { color: var(--color-fg); font-weight: 600; }
+#dash-root .cm-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md) var(--cds-gap-lg); align-items: center; }
+#dash-root .cm-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+#dash-root .cm-seg-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-right: var(--cds-gap-xs); }
+#dash-root .cm-seg button { font: inherit; font-size: var(--cds-font-size-caption); background: var(--color-panel); color: var(--color-fg-muted); border: 0; border-left: 1px solid var(--color-border-line); padding: var(--cds-pad-xs) var(--cds-pad-sm); cursor: pointer; }
+#dash-root .cm-seg button:first-child { border-left: 0; }
+#dash-root .cm-seg button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
+#dash-root .cm-seg button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+#dash-root .cm-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
+#dash-root .cm-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+#dash-root .cm-kpi-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .cm-kpi-value { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; min-height: 1.1em; }
+#dash-root .cm-kpi-delta { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); min-height: 1.4em; font-variant-numeric: tabular-nums; }
+#dash-root .cm-up { color: var(--color-ok); }
+#dash-root .cm-down { color: var(--color-bad); }
+#dash-root .cm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+#dash-root .cm-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+#dash-root .cm-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; }
+#dash-root .cm-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .cm-legend span { display: inline-flex; align-items: center; gap: 6px; }
+#dash-root .cm-sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+#dash-root .cm-sw-tick { width: 2px; height: 12px; border-radius: 0; }
+#dash-root .cm-chart { position: relative; min-height: 260px; }
+#dash-root .cm-chart svg { display: block; overflow: visible; }
+#dash-root .cm-chart text { font-family: var(--font-anthropic-sans); font-size: 11px; fill: var(--color-fg-muted); }
+#dash-root .cm-chart .cm-end { fill: var(--color-fg); }
+#dash-root .cm-tip { position: absolute; top: 0; left: 0; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); pointer-events: none; white-space: nowrap; z-index: 2; font-variant-numeric: tabular-nums; }
+#dash-root .cm-tip-head { color: var(--cds-text-secondary); margin-bottom: 2px; }
+#dash-root .cm-tip-row { display: flex; align-items: center; gap: 6px; }
+#dash-root .cm-tip-row b { margin-left: auto; padding-left: var(--cds-gap-md); font-weight: 600; }
+#dash-root .cm-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+#dash-root .cm-fail i { width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+#dash-root .cm-table-wrap { overflow-x: auto; }
+#dash-root .cm-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+#dash-root .cm-table th { text-align: right; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+#dash-root .cm-table td { text-align: right; padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+#dash-root .cm-table th:first-child, #dash-root .cm-table td:first-child, #dash-root .cm-table th:nth-child(2), #dash-root .cm-table td:nth-child(2) { text-align: left; }
+#dash-root .cm-table tr:last-child td { border-bottom: 0; }
+#dash-root .cm-name { display: inline-flex; align-items: center; gap: 8px; color: var(--color-fg); font-weight: 500; }
+#dash-root .cm-share { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+#dash-root .cm-share-track { width: 64px; height: 6px; border-radius: 3px; background: var(--cds-chart-grid); overflow: hidden; flex: none; }
+#dash-root .cm-share-bar { height: 100%; border-radius: 3px; }
+#dash-root .cm-hide-narrow { }
+@media (max-width: 560px) { #dash-root .cm-hide-narrow { display: none; } }
+#dash-root .cm-foot { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 4px; line-height: 1.5; max-width: 80ch; }
+#dash-root [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+#dash-root [data-dash-source-state=empty] { color: transparent; }
+</style>
+
+<div class="cm">
+  <header class="cm-head" id="overview">
+    <h1 class="cm-title">만성질환 처방시장</h1>
+    <p class="cm-takeaway dash-skeleton" id="takeaway" data-source="area_yearly area_yoy ingredient_share">—</p>
+  </header>
+
+  <div class="cm-controls" id="filters">
+    <div><span class="cm-seg-label">질환군</span><span class="cm-seg" id="area-seg" role="group" aria-label="질환군"></span></div>
+    <div><span class="cm-seg-label">지표</span><span class="cm-seg" id="metric-seg" role="group" aria-label="지표"></span></div>
+  </div>
+
+  <section class="cm-kpis" id="kpis" aria-label="2025년 연간 지표">
+    <div class="cm-card"><span class="cm-kpi-label">처방금액 (2025년)</span><span class="cm-kpi-value dash-skeleton" data-kpi="amount" data-source="area_yearly" data-field="amount_2025">—</span><span class="cm-kpi-delta" data-kpi-delta="amount" data-source="area_yoy" data-field="amount_yoy">—</span></div>
+    <div class="cm-card"><span class="cm-kpi-label">처방 환자수 (2025년)</span><span class="cm-kpi-value dash-skeleton" data-kpi="patients" data-source="area_yearly" data-field="patients_2025">—</span><span class="cm-kpi-delta" data-kpi-delta="patients" data-source="area_yoy" data-field="patients_yoy">—</span></div>
+    <div class="cm-card"><span class="cm-kpi-label">처방건수 (2025년)</span><span class="cm-kpi-value dash-skeleton" data-kpi="claims" data-source="area_yearly" data-field="claims_2025">—</span><span class="cm-kpi-delta" data-kpi-delta="claims" data-source="area_yoy" data-field="claims_yoy">—</span></div>
+    <div class="cm-card"><span class="cm-kpi-label">처방 의료기관 (2025년)</span><span class="cm-kpi-value dash-skeleton" data-kpi="prescribers" data-source="area_yearly" data-field="prescribers_2025">—</span><span class="cm-kpi-delta" data-kpi-delta="prescribers" data-source="area_yoy" data-field="prescribers_yoy">—</span></div>
+  </section>
+
+  <section class="cm-card" id="monthly">
+    <h2 id="monthly-title">월별 처방금액</h2>
+    <p class="cm-note">2024년 1월 ~ 2025년 12월, 진료 시작일 기준. 막대에 마우스를 올리면 전년 같은 달과 비교합니다.</p>
+    <div class="cm-legend"><span><i class="cm-sw" style="background: var(--cds-chart-muted)"></i>2024년</span><span><i class="cm-sw" id="monthly-sw25"></i>2025년</span></div>
+    <div class="cm-chart" id="monthly-chart" data-source="area_monthly"></div>
+  </section>
+
+  <div class="cm-grid">
+    <section class="cm-card" id="ingredients-trend">
+      <h2 id="ingr-title">성분별 분기 처방금액</h2>
+      <p class="cm-note">분기 합계. 같은 환자가 여러 성분을 처방받으면 성분마다 따로 셉니다.</p>
+      <div class="cm-legend" id="ingr-legend" data-source="ingredient_quarterly"></div>
+      <div class="cm-chart" id="ingr-chart" data-source="ingredient_quarterly"></div>
+    </section>
+    <section class="cm-card" id="regions">
+      <h2>권역별 처방금액</h2>
+      <p class="cm-note">처방한 의료기관이 있는 권역 기준, 2025년. 괄호 안은 전년 대비 증감입니다.</p>
+      <div class="cm-legend"><span><i class="cm-sw" id="region-sw"></i>2025년</span><span><i class="cm-sw cm-sw-tick" style="background: var(--color-fg)"></i>2024년</span></div>
+      <div class="cm-chart" id="region-chart" data-source="region_yearly region_yoy"></div>
+    </section>
+  </div>
+
+  <section class="cm-card" id="ingredient-table">
+    <h2>성분별 시장 현황</h2>
+    <p class="cm-note" id="table-note">2025년 연간. 점유율은 처방금액 기준입니다.</p>
+    <div class="cm-table-wrap">
+      <table class="cm-table" id="ingr-table" data-source="ingredient_yearly" data-row-key="ingredient">
+        <thead><tr>
+          <th data-field="ingredient">성분</th>
+          <th data-field="klass" class="cm-hide-narrow">계열</th>
+          <th data-field="amount_2025">처방금액</th>
+          <th data-source="ingredient_share" data-field="share_all_2025" id="share-th">점유율</th>
+          <th data-source="ingredient_share" data-field="share_all_change" id="share-chg-th" class="cm-hide-narrow">점유율 변화</th>
+          <th data-source="ingredient_share" data-field="amount_yoy">금액 전년비</th>
+          <th data-field="patients_2025" class="cm-hide-narrow">환자수</th>
+          <th data-field="claims_2025" class="cm-hide-narrow">처방건수</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <ul class="cm-foot" id="notes">
+    <li>교육용 가상 청구자료(kr_claims, 심평원 명세서 구조)를 집계했습니다. 실제 시장 규모가 아닙니다.</li>
+    <li>처방금액은 원외처방 금액(단가 × 총사용량)의 합입니다. 이 자료는 성분별 단가가 기간 내내 같아서 금액 변화가 곧 물량 변화입니다.</li>
+    <li>이 8개 성분은 모두 의원에서 처방되어 기관 종별 비교는 넣지 않았습니다.</li>
+  </ul>
+</div>
+
+<script>
+(() => {
+  const AREAS = ['전체', '고혈압', '이상지질혈증', '당뇨'];
+  const METRICS = { amount: '처방금액', patients: '처방 환자수', claims: '처방건수' };
+  const UNIT = { amount: '원', patients: '명', claims: '건' };
+  const comma = d3.format(',');
+
+  const won = (v) => v >= 1e8 ? (v / 1e8).toFixed(2) + '억원' : v >= 1e4 ? comma(Math.round(v / 1e4)) + '만원' : comma(v) + '원';
+  const wonShort = (v) => v >= 1e8 ? (v / 1e8).toFixed(1) + '억' : v >= 1e4 ? comma(Math.round(v / 1e4)) + '만' : comma(v);
+  const fmt = (m, v) => m === 'amount' ? won(v) : comma(v) + UNIT[m];
+  const fmtAxis = (m, v) => m === 'amount' ? wonShort(v) : comma(v);
+  const pct = (v) => (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%';
+  const pp = (v) => (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%p';
+  const P = () => { const p = dash.params(); return { area: AREAS.includes(p.area) ? p.area : '전체', metric: METRICS[p.metric] ? p.metric : 'amount' }; };
+  const el = (tag, attrs = {}, text) => { const n = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); if (text != null) n.textContent = text; return n; };
+  const jong = (w) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c <= 11171 ? c % 28 : 0; };
+  const iga = (w) => jong(w) ? '이' : '가';
+  const ro = (w) => { const j = jong(w); return j && j !== 8 ? '으로' : '로'; };
+  const svgEl = (tag) => document.createElementNS('http://www.w3.org/2000/svg', tag);
+
+  dash.calc('area_yoy', {
+    inputs: ['area_yearly'],
+    title: '질환군별 전년 대비 증감',
+    description: '질환군마다 2025년 값을 2024년 값으로 나눠 뺀 증감률(금액, 환자수, 처방건수, 처방기관).',
+    fn: (area_yearly) => area_yearly.map((r) => ({
+      area: r.area,
+      amount_yoy: r.amount_2025 / r.amount_2024 - 1,
+      patients_yoy: r.patients_2025 / r.patients_2024 - 1,
+      claims_yoy: r.claims_2025 / r.claims_2024 - 1,
+      prescribers_yoy: r.prescribers_2025 / r.prescribers_2024 - 1,
+    })),
+  });
+
+  dash.calc('ingredient_share', {
+    inputs: ['ingredient_yearly'],
+    title: '성분별 점유율과 증감',
+    description: '성분 처방금액을 전체 및 같은 질환군 합계로 나눈 점유율, 그 전년 대비 변화(%p), 금액 증감률.',
+    fn: (ingredient_yearly) => {
+      const sum = (rows, k) => rows.reduce((s, r) => s + r[k], 0);
+      const all24 = sum(ingredient_yearly, 'amount_2024'), all25 = sum(ingredient_yearly, 'amount_2025');
+      return ingredient_yearly.map((r) => {
+        const peers = ingredient_yearly.filter((x) => x.area === r.area);
+        const a24 = sum(peers, 'amount_2024'), a25 = sum(peers, 'amount_2025');
+        return {
+          ingredient: r.ingredient,
+          area: r.area,
+          share_all_2025: r.amount_2025 / all25,
+          share_all_change: r.amount_2025 / all25 - r.amount_2024 / all24,
+          share_area_2025: r.amount_2025 / a25,
+          share_area_change: r.amount_2025 / a25 - r.amount_2024 / a24,
+          amount_yoy: r.amount_2025 / r.amount_2024 - 1,
+        };
+      });
+    },
+  });
+
+  dash.calc('region_yoy', {
+    inputs: ['region_yearly'],
+    title: '권역별 처방금액 증감',
+    description: '질환군과 권역마다 2025년 처방금액을 2024년으로 나눠 뺀 증감률.',
+    fn: (region_yearly) => region_yearly.map((r) => ({ area: r.area, region: r.region, amount_yoy: r.amount_2025 / r.amount_2024 - 1 })),
+  });
+
+  // Controls
+  const areaSeg = document.getElementById('area-seg');
+  const metricSeg = document.getElementById('metric-seg');
+  AREAS.forEach((a) => { const b = el('button', { type: 'button', 'data-area': a }, a); b.addEventListener('click', () => dash.setParams({ area: a })); areaSeg.appendChild(b); });
+  Object.entries(METRICS).forEach(([k, label]) => { const b = el('button', { type: 'button', 'data-metric': k }, label); b.addEventListener('click', () => dash.setParams({ metric: k })); metricSeg.appendChild(b); });
+
+  // Shared helpers
+  const ingredientOrder = () => { const d = dash.data('ingredient_yearly'); return d.status === 'ok' ? d.data.map((r) => r.ingredient) : []; };
+  const colorOf = (name) => { const i = ingredientOrder().indexOf(name); return dash.colors[(i < 0 ? 0 : i) % dash.colors.length]; };
+
+  const gate = (box, ...ids) => {
+    const st = ids.map((id) => dash.data(id).status);
+    const ok = st.every((s) => s === 'ok');
+    box.classList.toggle('dash-skeleton', st.some((s) => s === 'loading'));
+    if (!ok) {
+      if (st.some((s) => s === 'error' || s === 'connect' || s === 'declined' || s === 'missing')) {
+        const f = el('div', { class: 'cm-fail' }); f.append(el('i'), el('span', {}, 'Failed to load')); box.replaceChildren(f);
+      } else box.replaceChildren();
+    }
+    return ok;
+  };
+
+  const measure = (svg, texts) => {
+    const t = svgEl('text'); svg.appendChild(t); let w = 0;
+    for (const s of texts) { t.textContent = s; w = Math.max(w, t.getComputedTextLength()); }
+    t.remove(); return w;
+  };
+
+  const tooltip = (box) => {
+    let t = box.querySelector('.cm-tip');
+    if (!t) { t = el('div', { class: 'cm-tip' }); t.hidden = true; box.appendChild(t); }
+    return {
+      show(x, y, head, rows) {
+        t.replaceChildren(el('div', { class: 'cm-tip-head' }, head));
+        for (const r of rows) {
+          const row = el('div', { class: 'cm-tip-row' });
+          if (r.color) { const sw = el('i', { class: 'cm-sw' }); sw.style.background = r.color; row.append(sw); }
+          row.append(el('span', {}, r.name), el('b', {}, r.value));
+          t.append(row);
+        }
+        t.hidden = false;
+        const W = box.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+        let left = x + 14; if (left + tw > W) left = Math.max(0, x - 14 - tw);
+        const top = Math.max(0, Math.min(y - th / 2, box.clientHeight - th));
+        t.style.transform = `translate(${left}px, ${top}px)`;
+      },
+      hide() { t.hidden = true; },
+    };
+  };
+
+  const barTop = (x, y, w, h, r) => { r = Math.max(0, Math.min(r, w / 2, h)); return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`; };
+  const barRight = (x, y, w, h, r) => { r = Math.max(0, Math.min(r, h / 2, w)); return `M${x},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h - r}Q${x + w},${y + h} ${x + w - r},${y + h}H${x}Z`; };
+
+  // Header and KPIs
+  function drawHeader() {
+    const { area } = P();
+    const tk = document.getElementById('takeaway');
+    const ay = dash.data('area_yearly'), yoy = dash.data('area_yoy'), sh = dash.data('ingredient_share');
+    tk.classList.toggle('dash-skeleton', [ay, yoy, sh].some((d) => d.status === 'loading'));
+    document.querySelectorAll('#kpis [data-kpi], #kpis [data-kpi-delta]').forEach((n) => n.setAttribute('data-where', 'area=' + encodeURIComponent(area)));
+    if (ay.status !== 'ok' || yoy.status !== 'ok') { tk.textContent = '—'; document.querySelectorAll('#kpis [data-kpi], #kpis [data-kpi-delta]').forEach((n) => { n.textContent = '—'; n.classList.toggle('dash-skeleton', ay.status === 'loading'); }); return; }
+    const row = ay.data.find((r) => r.area === area), yr = yoy.data.find((r) => r.area === area);
+    document.querySelectorAll('#kpis [data-kpi]').forEach((n) => {
+      n.classList.remove('dash-skeleton');
+      const k = n.dataset.kpi; const v = row[k + '_2025'];
+      n.textContent = k === 'amount' ? won(v) : k === 'prescribers' ? comma(v) + '곳' : fmt(k, v);
+    });
+    document.querySelectorAll('#kpis [data-kpi-delta]').forEach((n) => {
+      const k = n.dataset.kpiDelta; const v = yr[k + '_yoy'];
+      n.textContent = `${v >= 0 ? '▲' : '▼'} ${pct(v)} 전년 대비`;
+      n.className = 'cm-kpi-delta ' + (v > 0.0005 ? 'cm-up' : v < -0.0005 ? 'cm-down' : '');
+    });
+
+    const b = (text, attrs) => el('b', attrs, text);
+    const where = (a) => 'area=' + encodeURIComponent(a);
+    const verb = (v) => v >= 0 ? '늘었습니다' : '줄었습니다';
+    if (area === '전체') {
+      const parts = yoy.data.filter((r) => r.area !== '전체').sort((a, c) => c.amount_yoy - a.amount_yoy);
+      const top = parts[0];
+      tk.replaceChildren(
+        '2025년 만성질환 처방금액은 ', b(won(row.amount_2025), { 'data-source': 'area_yearly', 'data-field': 'amount_2025', 'data-where': where(area) }),
+        '으로 전년보다 ', b(pct(yr.amount_yoy), { 'data-source': 'area_yoy', 'data-field': 'amount_yoy', 'data-where': where(area) }), ' ' + verb(yr.amount_yoy).replace('습니다', '고') + ', ',
+        '질환군 중에서는 ', b(top.area, { 'data-source': 'area_yoy', 'data-field': 'area', 'data-where': where(top.area) }), iga(top.area) + ' ',
+        b(pct(top.amount_yoy), { 'data-source': 'area_yoy', 'data-field': 'amount_yoy', 'data-where': where(top.area) }), '로 가장 많이 ' + verb(top.amount_yoy) + '.'
+      );
+    } else {
+      const lead = sh.status === 'ok' ? sh.data.filter((r) => r.area === area).sort((a, c) => c.share_area_2025 - a.share_area_2025)[0] : null;
+      const kids = [
+        `2025년 ${area} 처방금액은 `, b(won(row.amount_2025), { 'data-source': 'area_yearly', 'data-field': 'amount_2025', 'data-where': where(area) }),
+        '으로 전년 대비 ', b(pct(yr.amount_yoy), { 'data-source': 'area_yoy', 'data-field': 'amount_yoy', 'data-where': where(area) }), ' ' + verb(yr.amount_yoy) + '.',
+      ];
+      if (lead) kids.push(' 처방금액 1위는 ', b(lead.ingredient, { 'data-source': 'ingredient_share', 'data-field': 'ingredient', 'data-where': 'ingredient=' + encodeURIComponent(lead.ingredient) }),
+        ro(lead.ingredient) + ' 질환군 안 점유율 ', b(d3.format('.1%')(lead.share_area_2025), { 'data-source': 'ingredient_share', 'data-field': 'share_area_2025', 'data-where': 'ingredient=' + encodeURIComponent(lead.ingredient) }), '입니다.');
+      tk.replaceChildren(...kids);
+    }
+  }
+
+  // Monthly bars
+  function drawMonthly() {
+    const { area, metric } = P();
+    document.getElementById('monthly-title').textContent = `월별 ${METRICS[metric]}` + (area === '전체' ? '' : ` (${area})`);
+    document.getElementById('monthly-sw25').style.background = dash.colors[0];
+    const box = document.getElementById('monthly-chart');
+    if (!gate(box, 'area_monthly')) return;
+    const rows = dash.data('area_monthly').data.filter((r) => r.area === area).map((r) => ({ ...r, v: +r[metric], y: r.month.slice(0, 4), m: +r.month.slice(5, 7) }));
+    const byMonth = new Map(rows.map((r) => [r.month, r]));
+    const W = Math.max(280, box.clientWidth), H = 260, mt = 8, mb = 40;
+    const svg = svgEl('svg'); box.replaceChildren(svg); const tip = tooltip(box);
+    d3.select(svg).attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', `월별 ${METRICS[metric]} 막대 차트`);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r.v) || 1], [H - mb, mt]).nice();
+    const ticks = y.ticks(4);
+    const ml = Math.ceil(measure(svg, ticks.map((t) => fmtAxis(metric, t)))) + 10, mr = 4;
+    const x = d3.scaleBand(rows.map((r) => r.month), [ml, W - mr]).paddingInner(0.25).paddingOuter(0.1);
+    const g = d3.select(svg);
+    g.append('g').selectAll('line').data(ticks).join('line').attr('x1', ml).attr('x2', W - mr).attr('y1', (t) => y(t)).attr('y2', (t) => y(t)).attr('stroke', (t) => t === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)').attr('stroke-width', 1);
+    g.append('g').selectAll('text').data(ticks).join('text').attr('x', ml - 8).attr('y', (t) => y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text((t) => fmtAxis(metric, t));
+    const bars = g.append('g').selectAll('path').data(rows).join('path')
+      .attr('d', (r) => barTop(x(r.month), y(r.v), x.bandwidth(), y(0) - y(r.v), 4))
+      .attr('fill', (r) => r.y === '2025' ? dash.colors[0] : 'var(--cds-chart-muted)');
+    const step = W < 520 ? 6 : 3;
+    g.append('g').selectAll('text').data(rows.filter((r) => (r.m - 1) % step === 0)).join('text')
+      .attr('x', (r) => x(r.month) + x.bandwidth() / 2).attr('y', H - mb + 16).attr('text-anchor', 'middle').text((r) => r.m + '월');
+    g.append('g').selectAll('text').data(rows.filter((r) => r.m === 1)).join('text')
+      .attr('x', (r) => x(r.month)).attr('y', H - mb + 32).attr('text-anchor', 'start').attr('class', 'cm-end').text((r) => r.y + '년');
+    g.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', (r) => x(r.month) - x.step() * x.paddingInner() / 2).attr('y', mt).attr('width', x.step()).attr('height', H - mb - mt).attr('fill', 'transparent')
+      .on('pointerenter pointermove', (ev, r) => {
+        bars.attr('opacity', (b) => b === r ? 1 : 0.55);
+        const prev = byMonth.get(`${+r.y - 1}-${r.month.slice(5)}`);
+        const lines = [{ name: METRICS[metric], value: fmt(metric, r.v) }];
+        if (prev) lines.push({ name: '전년 같은 달', value: pct(r.v / prev.v - 1) });
+        const [px, py] = d3.pointer(ev, box);
+        tip.show(px, py, `${r.y}년 ${r.m}월`, lines);
+      })
+      .on('pointerleave', () => { bars.attr('opacity', 1); tip.hide(); });
+  }
+
+  // Ingredient quarterly lines
+  function drawIngredients() {
+    const { area, metric } = P();
+    document.getElementById('ingr-title').textContent = `성분별 분기 ${METRICS[metric]}`;
+    const box = document.getElementById('ingr-chart'), legend = document.getElementById('ingr-legend');
+    if (!gate(box, 'ingredient_quarterly', 'ingredient_yearly')) { legend.replaceChildren(); return; }
+    const order = ingredientOrder();
+    const rows = dash.data('ingredient_quarterly').data.filter((r) => area === '전체' || r.area === area);
+    const quarters = [...new Set(rows.map((r) => r.quarter))].sort();
+    const series = d3.groups(rows, (r) => r.ingredient).sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0]))
+      .map(([name, rs]) => ({ name, color: colorOf(name), pts: quarters.map((q) => { const r = rs.find((x) => x.quarter === q); return { q, v: r ? +r[metric] : 0 }; }) }));
+    legend.replaceChildren(...series.map((s) => { const sp = el('span'); const sw = el('i', { class: 'cm-sw' }); sw.style.background = s.color; sp.append(sw, s.name); return sp; }));
+
+    const W = Math.max(280, box.clientWidth), H = 260, mt = 10, mb = 26;
+    const svg = svgEl('svg'); box.replaceChildren(svg); const tip = tooltip(box);
+    d3.select(svg).attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', `성분별 분기 ${METRICS[metric]} 선 차트`);
+    const y = d3.scaleLinear([0, d3.max(series, (s) => d3.max(s.pts, (p) => p.v)) || 1], [H - mb, mt]).nice();
+    const ticks = y.ticks(4);
+    const ml = Math.ceil(measure(svg, ticks.map((t) => fmtAxis(metric, t)))) + 10;
+    const direct = series.length <= 4;
+    const mr = direct ? Math.ceil(measure(svg, series.map((s) => s.name))) + 14 : 10;
+    const x = d3.scalePoint(quarters, [ml + 6, W - mr]);
+    const g = d3.select(svg);
+    g.append('g').selectAll('line').data(ticks).join('line').attr('x1', ml).attr('x2', W - mr + (direct ? 4 : 0)).attr('y1', (t) => y(t)).attr('y2', (t) => y(t)).attr('stroke', (t) => t === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)');
+    g.append('g').selectAll('text').data(ticks).join('text').attr('x', ml - 8).attr('y', (t) => y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text((t) => fmtAxis(metric, t));
+    const qLabel = (q) => `${q.slice(2, 4)}년 ${q.slice(6)}분기`;
+    const qShort = (q) => `${q.slice(2, 4)}.${q.slice(5)}`;
+    const every = W < 440 ? 2 : 1;
+    g.append('g').selectAll('text').data(quarters.filter((_, i) => i % every === 0)).join('text').attr('x', (q) => x(q)).attr('y', H - 8).attr('text-anchor', 'middle').text(qShort);
+    const line = d3.line().x((p) => x(p.q)).y((p) => y(p.v));
+    g.append('g').selectAll('path').data(series).join('path').attr('d', (s) => line(s.pts)).attr('fill', 'none').attr('stroke', (s) => s.color).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+    g.append('g').selectAll('circle').data(series).join('circle').attr('cx', (s) => x(quarters.at(-1))).attr('cy', (s) => y(s.pts.at(-1).v)).attr('r', 4).attr('fill', (s) => s.color).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+    if (direct) {
+      const labs = series.map((s) => ({ name: s.name, y: y(s.pts.at(-1).v) })).sort((a, b) => a.y - b.y);
+      for (let i = 1; i < labs.length; i++) if (labs[i].y - labs[i - 1].y < 14) labs[i].y = labs[i - 1].y + 14;
+      const over = labs.length ? labs.at(-1).y - (H - mb) : 0; if (over > 0) labs.forEach((l) => { l.y -= over; });
+      g.append('g').selectAll('text').data(labs).join('text').attr('class', 'cm-end').attr('x', x(quarters.at(-1)) + 10).attr('y', (l) => l.y).attr('dy', '0.32em').text((l) => l.name);
+    }
+    const rule = g.append('line').attr('y1', mt).attr('y2', H - mb).attr('stroke', 'var(--cds-chart-reference)').attr('opacity', 0);
+    const dots = g.append('g');
+    g.append('rect').attr('x', ml).attr('y', mt).attr('width', W - mr - ml).attr('height', H - mb - mt).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx] = d3.pointer(ev, svg);
+        const sx = mx * (W / svg.getBoundingClientRect().width);
+        const q = quarters.reduce((a, b) => Math.abs(x(b) - sx) < Math.abs(x(a) - sx) ? b : a);
+        rule.attr('x1', x(q)).attr('x2', x(q)).attr('opacity', 1);
+        const pts = series.map((s) => ({ s, p: s.pts.find((p) => p.q === q) }));
+        dots.selectAll('circle').data(pts).join('circle').attr('cx', x(q)).attr('cy', (d) => y(d.p.v)).attr('r', 4).attr('fill', (d) => d.s.color).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+        const [px, py] = d3.pointer(ev, box);
+        tip.show(px, py, qLabel(q), pts.slice().sort((a, b) => b.p.v - a.p.v).map((d) => ({ color: d.s.color, name: d.s.name, value: fmt(metric, d.p.v) })));
+      })
+      .on('pointerleave', () => { rule.attr('opacity', 0); dots.selectAll('circle').remove(); tip.hide(); });
+  }
+
+  // Region bars
+  function drawRegions() {
+    const { area } = P();
+    document.getElementById('region-sw').style.background = dash.colors[0];
+    const box = document.getElementById('region-chart');
+    if (!gate(box, 'region_yearly', 'region_yoy')) return;
+    const yoy = dash.data('region_yoy').data;
+    const rows = dash.data('region_yearly').data.filter((r) => r.area === area)
+      .map((r) => ({ ...r, yoy: (yoy.find((z) => z.area === r.area && z.region === r.region) || {}).amount_yoy }))
+      .sort((a, b) => b.amount_2025 - a.amount_2025);
+    const bh = 26, gap = 18, mt = 4;
+    const H = mt + rows.length * (bh + gap);
+    const W = Math.max(280, box.clientWidth);
+    const svg = svgEl('svg'); box.replaceChildren(svg); const tip = tooltip(box);
+    d3.select(svg).attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '권역별 처방금액 가로 막대 차트');
+    const lab = (r) => `${won(r.amount_2025)} (${pct(r.yoy)})`;
+    const ml = Math.ceil(measure(svg, rows.map((r) => r.region))) + 12;
+    const mr = Math.ceil(measure(svg, rows.map(lab))) + 12;
+    const x = d3.scaleLinear([0, d3.max(rows, (r) => Math.max(r.amount_2025, r.amount_2024)) || 1], [ml, W - mr]);
+    const g = d3.select(svg);
+    const yy = (i) => mt + i * (bh + gap);
+    g.append('line').attr('x1', ml).attr('x2', ml).attr('y1', 0).attr('y2', H - gap + 4).attr('stroke', 'var(--cds-chart-axis)');
+    const grp = g.append('g').selectAll('g').data(rows).join('g').attr('transform', (r, i) => `translate(0,${yy(i)})`);
+    grp.append('text').attr('x', ml - 10).attr('y', bh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').attr('class', 'cm-end').text((r) => r.region);
+    const bars = grp.append('path').attr('d', (r) => barRight(ml, 0, x(r.amount_2025) - ml, bh, 4)).attr('fill', dash.colors[0]);
+    grp.append('line').attr('x1', (r) => x(r.amount_2024)).attr('x2', (r) => x(r.amount_2024)).attr('y1', -3).attr('y2', bh + 3).attr('stroke', 'var(--color-fg)').attr('stroke-width', 2);
+    grp.append('text').attr('x', (r) => Math.max(x(r.amount_2025), x(r.amount_2024)) + 8).attr('y', bh / 2).attr('dy', '0.32em').text(lab);
+    grp.append('rect').attr('x', 0).attr('y', -gap / 2).attr('width', W).attr('height', bh + gap).attr('fill', 'transparent')
+      .on('pointerenter pointermove', (ev, r) => {
+        bars.attr('opacity', (b) => b === r ? 1 : 0.55);
+        const [px, py] = d3.pointer(ev, box);
+        tip.show(px, py, r.region, [
+          { name: '2025년 처방금액', value: won(r.amount_2025) },
+          { name: '2024년 처방금액', value: won(r.amount_2024) },
+          { name: '전년 대비', value: pct(r.yoy) },
+          { name: '2025년 환자수', value: comma(r.patients_2025) + '명' },
+          { name: '2025년 처방기관', value: comma(r.prescribers_2025) + '곳' },
+        ]);
+      })
+      .on('pointerleave', () => { bars.attr('opacity', 1); tip.hide(); });
+  }
+
+  // Ingredient table
+  function drawTable() {
+    const { area } = P();
+    const tbody = document.querySelector('#ingr-table tbody');
+    const scope = area === '전체' ? 'all' : 'area';
+    document.getElementById('share-th').setAttribute('data-field', `share_${scope}_2025`);
+    document.getElementById('share-chg-th').setAttribute('data-field', `share_${scope}_change`);
+    document.getElementById('table-note').textContent = area === '전체'
+      ? '2025년 연간. 점유율은 8개 성분 전체 처방금액 기준, 변화는 2024년 대비입니다.'
+      : `2025년 연간. 점유율은 ${area} 성분들의 처방금액 합계 기준, 변화는 2024년 대비입니다.`;
+    const yd = dash.data('ingredient_yearly'), sd = dash.data('ingredient_share');
+    if (yd.status !== 'ok' || sd.status !== 'ok') { tbody.replaceChildren(); return; }
+    const rows = yd.data.filter((r) => area === '전체' || r.area === area).slice().sort((a, b) => b.amount_2025 - a.amount_2025);
+    const maxShare = d3.max(rows, (r) => sd.data.find((s) => s.ingredient === r.ingredient)[`share_${scope}_2025`]);
+    tbody.replaceChildren(...rows.map((r) => {
+      const s = sd.data.find((z) => z.ingredient === r.ingredient);
+      const share = s[`share_${scope}_2025`], chg = s[`share_${scope}_change`];
+      const tr = el('tr', { 'data-key': r.ingredient });
+      const nameTd = el('td'); const nm = el('span', { class: 'cm-name' }); const sw = el('i', { class: 'cm-sw' }); sw.style.background = colorOf(r.ingredient); nm.append(sw, r.ingredient); nameTd.append(nm);
+      const shareTd = el('td'); const wrap = el('span', { class: 'cm-share' }); const track = el('span', { class: 'cm-share-track' }); const bar = el('span', { class: 'cm-share-bar' });
+      bar.style.width = (share / maxShare * 100) + '%'; bar.style.background = colorOf(r.ingredient); track.append(bar);
+      wrap.append(track, el('span', {}, d3.format('.1%')(share))); shareTd.append(wrap);
+      const chgTd = el('td', { class: 'cm-hide-narrow' + (chg > 0.0005 ? ' cm-up' : chg < -0.0005 ? ' cm-down' : '') }, pp(chg));
+      const yoyTd = el('td', { class: s.amount_yoy > 0.0005 ? 'cm-up' : s.amount_yoy < -0.0005 ? 'cm-down' : '' }, pct(s.amount_yoy));
+      tr.append(nameTd, el('td', { class: 'cm-hide-narrow' }, r.klass), el('td', {}, won(r.amount_2025)), shareTd, chgTd, yoyTd,
+        el('td', { class: 'cm-hide-narrow' }, comma(r.patients_2025) + '명'), el('td', { class: 'cm-hide-narrow' }, comma(r.claims_2025) + '건'));
+      return tr;
+    }));
+  }
+
+  dash.onData(() => {
+    const { area, metric } = P();
+    areaSeg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.area === area)));
+    metricSeg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.metric === metric)));
+    drawHeader();
+    drawMonthly();
+    drawIngredients();
+    drawRegions();
+    drawTable();
+  });
+})();
+</script>
+
+</div>
+</body>
+</html>
